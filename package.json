@@ -2,7 +2,7 @@
   "name": "constant-extension",
   "displayName": "constant-extension",
   "description": "Converts the selected content to uppercase",
-  "publisher": "linjiayuan",
+  "publisher": "constant-extension-linjy",
   "icon": "constant.png",
   "version": "0.0.1",
   "engines": {
