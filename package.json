@@ -1,7 +1,9 @@
 {
   "name": "constant-extension",
   "displayName": "constant-extension",
-  "description": "constant-extension",
+  "description": "Converts the selected content to uppercase",
+  "publisher": "linjiayuan",
+  "icon": "constant.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"
