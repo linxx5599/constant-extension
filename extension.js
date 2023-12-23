@@ -11,19 +11,22 @@ async function run(fn) {
 	const editor = vscode.window.activeTextEditor;
 	if (editor) {
 		// 获取选中的文本
-		const selection = editor.selection;
-		const selectedText = editor.document.getText(selection);
-		// 在这里可以进行其他操作，使用选中的文本进行处理
-		try {
-			if (fn) {
-				const result = await fn(selectedText);
-				editor.edit(editBuilder => {
-					editBuilder.replace(selection, result);
-				});
+		const selections = editor.selections;
+		for (const selection of selections) {
+			const selectedText = editor.document.getText(selection);
+			// 在这里可以进行其他操作，使用选中的文本进行处理
+			try {
+				if (fn) {
+					const result = await fn(selectedText);
+					editor.edit(editBuilder => {
+						editBuilder.replace(selection, result);
+					});
+				}
+			} catch (error) {
+				showErrorMessage(error);
 			}
-		} catch (error) {
-			showErrorMessage(error);
 		}
+
 	} else {
 		showErrorMessage(config.EMPTY_TEXT);
 	}

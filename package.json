@@ -4,7 +4,7 @@
   "description": "Converts the selected content to uppercase",
   "publisher": "constant-extension-linjy",
   "icon": "constant.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -98,7 +98,7 @@
     ],
     "keybindings": [
       {
-        "command": "constant-extension",
+        "command": "upperSnakeCase",
         "key": "ctrl+alt+q",
         "mac": "cmd+alt+q"
       }
