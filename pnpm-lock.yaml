@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  wordsninja:
+    specifier: ^1.0.0
+    version: 1.0.0
+
 devDependencies:
   '@types/mocha':
     specifier: ^10.0.6
@@ -1229,6 +1234,10 @@ packages:
     dependencies:
       isexe: 2.0.0
     dev: true
+
+  /wordsninja@1.0.0:
+    resolution: {integrity: sha512-f9aKDZ01xCjBEVxqQ4+fbSw+Jksi0OlvWV4QeqFzX78FjwREk/7ARgk0PuKlOkxGPg1ylkTYMTcKpReMVi2z4A==, tarball: https://registry.npmmirror.com/wordsninja/-/wordsninja-1.0.0.tgz}
+    dev: false
 
   /workerpool@6.2.1:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==, tarball: https://registry.npmmirror.com/workerpool/-/workerpool-6.2.1.tgz}
