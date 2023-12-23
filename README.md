@@ -1,69 +1,27 @@
-# constant README
-### setting.json
-{ 
-  "constantJSON": {
-    "+": "_"
-  } 
-}
+# 介绍
 
-## Features
+这是一款 VScode 插件，它能转换你的变量名为各种命名规则的格式，试试看！
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+# 使用方法
 
-For example if there is an image subfolder under your extension project workspace:
+打开VScode，在`拓展`搜索：constant-extension
 
-\!\[feature X\]\(images/feature-x.png\)
+在编辑器中选中字符，右键->Rename->选择想要转换的格式
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+# 命名方法
 
-## Requirements
+- 大驼峰：UperCamelCase ✅
+- 小驼峰：lowerCamelCase ✅
+- 大蛇形：SNAKE_CASE ✅
+- 小蛇形：snake_case ✅
+- 小脊柱：kebab-case ✅
+- 大脊柱：KEBAB-CASE ✅
+- 全小写： case ✅
+- 全大写： CASE ✅
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
-## Extension Settings
+# TODO
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+- 添加自定义单词匹配
 
 **Enjoy!**

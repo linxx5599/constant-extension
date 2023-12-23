@@ -16,18 +16,86 @@
   "contributes": {
     "commands": [
       {
-        "command": "constant-extension",
-        "title": "选定内容转换全大写"
+        "command": "upperCamelCase",
+        "title": "=> UpperCamelCase"
+      },
+      {
+        "command": "lowerCamelCase",
+        "title": "=> lowerCamelCase"
+      },
+      {
+        "command": "lowerCase",
+        "title": "=> lowercase"
+      },
+      {
+        "command": "upperCase",
+        "title": "=> UPPERCASE"
+      },
+      {
+        "command": "lowerSnakeCase",
+        "title": "=> lower_snake_case"
+      },
+      {
+        "command": "upperSnakeCase",
+        "title": "=> UPPER_SNAKE_CASE"
+      },
+      {
+        "command": "lowerKebabCase",
+        "title": "=> lower-kebab-case"
+      },
+      {
+        "command": "upperKebabCase",
+        "title": "=> UPPER-KEBAB-CASE"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "constant-extension",
-          "group": "navigation"
+          "group": "navigation",
+          "submenu": "root"
+        }
+      ],
+      "root": [
+        {
+          "command": "upperCamelCase",
+          "group": "rename"
+        },
+        {
+          "command": "lowerCamelCase",
+          "group": "rename"
+        },
+        {
+          "command": "lowerCase",
+          "group": "rename"
+        },
+        {
+          "command": "upperCase",
+          "group": "rename"
+        },
+        {
+          "command": "lowerSnakeCase",
+          "group": "rename"
+        },
+        {
+          "command": "upperSnakeCase",
+          "group": "rename"
+        },
+        {
+          "command": "lowerKebabCase",
+          "group": "rename"
+        },
+        {
+          "command": "upperKebabCase",
+          "group": "rename"
         }
       ]
     },
+    "submenus": [
+      {
+        "id": "root",
+        "label": "Rename"
+      }
+    ],
     "keybindings": [
       {
         "command": "constant-extension",
@@ -42,12 +110,15 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.85.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
+    "@types/vscode": "^1.85.0",
     "@vscode/test-cli": "^0.0.4",
-    "@vscode/test-electron": "^2.3.8"
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "wordsninja": "^1.0.0"
   }
 }
