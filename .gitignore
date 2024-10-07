@@ -1,0 +1,8 @@
+/node_modules
+/.vscode
+*.vsix
+pnpm-lock.yaml
+package-lock.json
+node_modules
+npm-debug.log*
+pnpm-debug.log*
