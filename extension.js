@@ -19,12 +19,13 @@ async function run(fn) {
   for (const selection of selections) {
     const selectedText = editor.document.getText(selection);
     // 在这里可以进行其他操作，使用选中的文本进行处理
-    const [err, result] = await utils.asyncFn(fn(selectedText));
-    if (err) {
-      showErrorMessage(err);
-      continue;
-    }
-    if (!cache.has(result)) {
+
+    if (!cache.has(selectedText)) {
+      const [err, result] = await utils.asyncFn(fn(selectedText));
+      if (err) {
+        showErrorMessage(err);
+        continue;
+      }
       cache.set(selectedText, result);
     }
     const edit = new vscode.TextEdit(selection, cache.get(selectedText));
