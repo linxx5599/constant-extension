@@ -1,6 +1,4 @@
-const EMPTY_TEXT = "No active text editor.";
-const NOT_SUPPORTED = "The change operation is not supported.";
+const EDIT_FAILURE = "edit failure.";
 module.exports = {
-  EMPTY_TEXT,
-  NOT_SUPPORTED,
+  EDIT_FAILURE,
 };

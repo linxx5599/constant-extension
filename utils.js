@@ -6,167 +6,180 @@ function injectWords() {
 }
 
 function convertToLowerSnakeCase(str) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await WordsNinja.loadDictionary();
-      injectWords();
-      const words = WordsNinja.splitSentence(str);
+  return new Promise((resolve, reject) => {
+    const _run = async () => {
+      try {
+        await WordsNinja.loadDictionary();
+        injectWords();
+        const words = WordsNinja.splitSentence(str);
 
-      let res = "";
+        let res = "";
 
-      if (typeof words === "string") {
-        // 如果值是字符串类型
-        resolve(words.toLowerCase());
-      } else if (Array.isArray(words)) {
-        for (let i = 0; i < words.length; i++) {
-          res += words[i].toLowerCase() + "_";
+        if (typeof words === "string") {
+          // 如果值是字符串类型
+          resolve(words.toLowerCase());
+        } else if (Array.isArray(words)) {
+          for (let i = 0; i < words.length; i++) {
+            res += words[i].toLowerCase() + "_";
+          }
+          resolve(res.slice(0, -1));
+        } else {
+          reject(new Error("Invalid input"));
         }
-        resolve(res.slice(0, -1));
-      } else {
-        reject(new Error("Invalid input"));
+      } catch (error) {
+        reject(error);
       }
-    } catch (error) {
-      reject(error);
-    }
+    };
+    _run();
   });
 }
 
 function convertToUpperSnakeCase(str) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await WordsNinja.loadDictionary();
-      injectWords();
-      const words = WordsNinja.splitSentence(str);
+  return new Promise((resolve, reject) => {
+    const _run = async () => {
+      try {
+        await WordsNinja.loadDictionary();
+        injectWords();
+        const words = WordsNinja.splitSentence(str);
 
-      let res = "";
+        let res = "";
 
-      if (typeof words === "string") {
-        // 如果值是字符串类型
-        resolve(words.toUpperCase());
-      } else if (Array.isArray(words)) {
-        for (let i = 0; i < words.length; i++) {
-          res += words[i].toUpperCase() + "_";
+        if (typeof words === "string") {
+          // 如果值是字符串类型
+          resolve(words.toUpperCase());
+        } else if (Array.isArray(words)) {
+          for (let i = 0; i < words.length; i++) {
+            res += words[i].toUpperCase() + "_";
+          }
+          resolve(res.slice(0, -1));
+        } else {
+          reject(new Error("Invalid input"));
         }
-        resolve(res.slice(0, -1));
-      } else {
-        reject(new Error("Invalid input"));
+      } catch (error) {
+        reject(error);
       }
-    } catch (error) {
-      reject(error);
-    }
+    };
+    _run();
   });
 }
 
 function convertToLowerKebabCase(str) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await WordsNinja.loadDictionary();
-      injectWords();
-      const words = WordsNinja.splitSentence(str);
+  return new Promise((resolve, reject) => {
+    const _run = async () => {
+      try {
+        await WordsNinja.loadDictionary();
+        injectWords();
+        const words = WordsNinja.splitSentence(str);
 
-      let res = "";
+        let res = "";
 
-      if (typeof words === "string") {
-        // 如果值是字符串类型
-        resolve(words.toLowerCase());
-      } else if (Array.isArray(words)) {
-        for (let i = 0; i < words.length; i++) {
-          res += words[i].toLowerCase() + "-";
+        if (typeof words === "string") {
+          // 如果值是字符串类型
+          resolve(words.toLowerCase());
+        } else if (Array.isArray(words)) {
+          for (let i = 0; i < words.length; i++) {
+            res += words[i].toLowerCase() + "-";
+          }
+          resolve(res.slice(0, -1));
+        } else {
+          reject(new Error("Invalid input"));
         }
-        resolve(res.slice(0, -1));
-      } else {
-        reject(new Error("Invalid input"));
+      } catch (error) {
+        reject(error);
       }
-    } catch (error) {
-      reject(error);
-    }
+    };
+    _run();
   });
 }
 
 function convertToUpperKebabCase(str) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await WordsNinja.loadDictionary();
-      injectWords();
-      const words = WordsNinja.splitSentence(str);
+  return new Promise((resolve, reject) => {
+    const _run = async () => {
+      try {
+        await WordsNinja.loadDictionary();
+        injectWords();
+        const words = WordsNinja.splitSentence(str);
 
-      let res = "";
+        let res = "";
 
-      if (typeof words === "string") {
-        // 如果值是字符串类型
-        resolve(words.toUpperCase());
-      } else if (Array.isArray(words)) {
-        for (let i = 0; i < words.length; i++) {
-          res += words[i].toUpperCase() + "-";
+        if (typeof words === "string") {
+          // 如果值是字符串类型
+          resolve(words.toUpperCase());
+        } else if (Array.isArray(words)) {
+          for (let i = 0; i < words.length; i++) {
+            res += words[i].toUpperCase() + "-";
+          }
+          resolve(res.slice(0, -1));
+        } else {
+          reject(new Error("Invalid input"));
         }
-        resolve(res.slice(0, -1));
-      } else {
-        reject(new Error("Invalid input"));
+      } catch (error) {
+        reject(error);
       }
-    } catch (error) {
-      reject(error);
-    }
+    };
+    _run();
   });
 }
 
 function convertToLowerCamelCase(str) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await WordsNinja.loadDictionary();
-      injectWords();
-      const words = WordsNinja.splitSentence(str);
+  return new Promise((resolve, reject) => {
+    const _run = async () => {
+      try {
+        await WordsNinja.loadDictionary();
+        injectWords();
+        const words = WordsNinja.splitSentence(str);
+        let res = "";
 
-      let res = "";
-
-      if (typeof words === "string") {
-        // 如果值是字符串类型
-        resolve(words.toLowerCase());
-      } else if (Array.isArray(words)) {
-        for (let i = 0; i < words.length; i++) {
-          if (i == 0) {
-            res += words[i].toLowerCase();
-          } else {
-            res += capitalizeFirstLetter(words[i].toLowerCase());
+        if (typeof words === "string") {
+          // 如果值是字符串类型
+          resolve(words.toLowerCase());
+        } else if (Array.isArray(words)) {
+          for (let i = 0; i < words.length; i++) {
+            if (i == 0) {
+              res += words[i].toLowerCase();
+            } else {
+              res += capitalizeFirstLetter(words[i].toLowerCase());
+            }
           }
+          resolve(res);
+        } else {
+          reject(new Error("Invalid input"));
         }
-        resolve(res);
-      } else {
-        reject(new Error("Invalid input"));
+      } catch (error) {
+        reject(error);
       }
-    } catch (error) {
-      reject(error);
-    }
+    };
+    _run();
   });
 }
 
 function convertToUpperCamelCase(str) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await WordsNinja.loadDictionary();
-      injectWords();
-      const words = WordsNinja.splitSentence(str);
+  return new Promise((resolve, reject) => {
+    const _run = async () => {
+      try {
+        await WordsNinja.loadDictionary();
+        injectWords();
+        const words = WordsNinja.splitSentence(str);
 
-      let res = "";
+        let res = "";
 
-      if (typeof words === "string") {
-        // 如果值是字符串类型
-        resolve(capitalizeFirstLetter(words.toLowerCase()));
-      } else if (Array.isArray(words)) {
-        for (let i = 0; i < words.length; i++) {
-          res += capitalizeFirstLetter(words[i].toLowerCase());
+        if (typeof words === "string") {
+          // 如果值是字符串类型
+          resolve(capitalizeFirstLetter(words.toLowerCase()));
+        } else if (Array.isArray(words)) {
+          for (let i = 0; i < words.length; i++) {
+            res += capitalizeFirstLetter(words[i].toLowerCase());
+          }
+          resolve(res);
+        } else {
+          reject(new Error("Invalid input"));
         }
-        resolve(res);
-      } else {
-        reject(new Error("Invalid input"));
+      } catch (error) {
+        reject(error);
       }
-    } catch (error) {
-      reject(error);
-    }
+    };
+    _run();
   });
-}
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 // 首字母大写

@@ -9,34 +9,42 @@ function showErrorMessage(message) {
 //get editor
 async function run(fn) {
   const editor = vscode.window.activeTextEditor;
-  if (editor) {
-    // 获取选中的文本
-    const selections = editor.selections;
-    const cache = new Map();
-    for (const selection of selections) {
-      const selectedText = editor.document.getText(selection);
-      // 在这里可以进行其他操作，使用选中的文本进行处理
-      const [err, result] = await utils.asyncFn(fn(selectedText));
-      if (err) {
-        showErrorMessage(err);
-        continue;
-      }
-      if (!cache.has(result)) {
-        cache.set(selectedText, result);
-      }
-      await new Promise((resolve) => {
-        editor.edit((editBuilder) => {
-          try {
-            editBuilder.replace(selection, cache.get(selectedText));
-          } catch (error) {
-            showErrorMessage(error);
-          }
-          resolve();
-        });
-      });
+  if (!editor) {
+    return;
+  }
+  // 获取选中的文本
+  const selections = editor.selections;
+  const cache = new Map();
+  const textEdits = new vscode.WorkspaceEdit();
+  for (const selection of selections) {
+    const selectedText = editor.document.getText(selection);
+    // 在这里可以进行其他操作，使用选中的文本进行处理
+    const [err, result] = await utils.asyncFn(fn(selectedText));
+    if (err) {
+      showErrorMessage(err);
+      continue;
     }
-  } else {
-    showErrorMessage(config.EMPTY_TEXT);
+    if (!cache.has(result)) {
+      cache.set(selectedText, result);
+    }
+    const edit = new vscode.TextEdit(selection, cache.get(selectedText));
+    textEdits.set(editor.document.uri, [edit]);
+    // await new Promise((resolve) => {
+    //   editor.edit((editBuilder) => {
+    //     try {
+    //       editBuilder.replace(selection, cache.get(selectedText));
+    //     } catch (error) {
+    //       showErrorMessage(error);
+    //     }
+    //     resolve();
+    //   });
+    // });
+  }
+  try {
+    // 应用批量编辑
+    await vscode.workspace.applyEdit(textEdits);
+  } catch (e) {
+    showErrorMessage(config.EDIT_FAILURE + ":" + e);
   }
 }
 const events = {
