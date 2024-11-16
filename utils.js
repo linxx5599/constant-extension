@@ -1,7 +1,7 @@
-const WordsNinjaPack = require('wordsninja');
+const WordsNinjaPack = require("wordsninja");
 const WordsNinja = new WordsNinjaPack();
 
-function injectWords(){
+function injectWords() {
   WordsNinja.addWords("kube");
 }
 
@@ -14,7 +14,7 @@ function convertToLowerSnakeCase(str) {
 
       let res = "";
 
-      if (typeof words === 'string') {
+      if (typeof words === "string") {
         // 如果值是字符串类型
         resolve(words.toLowerCase());
       } else if (Array.isArray(words)) {
@@ -23,7 +23,7 @@ function convertToLowerSnakeCase(str) {
         }
         resolve(res.slice(0, -1));
       } else {
-        reject(new Error('Invalid input'));
+        reject(new Error("Invalid input"));
       }
     } catch (error) {
       reject(error);
@@ -40,7 +40,7 @@ function convertToUpperSnakeCase(str) {
 
       let res = "";
 
-      if (typeof words === 'string') {
+      if (typeof words === "string") {
         // 如果值是字符串类型
         resolve(words.toUpperCase());
       } else if (Array.isArray(words)) {
@@ -49,7 +49,7 @@ function convertToUpperSnakeCase(str) {
         }
         resolve(res.slice(0, -1));
       } else {
-        reject(new Error('Invalid input'));
+        reject(new Error("Invalid input"));
       }
     } catch (error) {
       reject(error);
@@ -66,7 +66,7 @@ function convertToLowerKebabCase(str) {
 
       let res = "";
 
-      if (typeof words === 'string') {
+      if (typeof words === "string") {
         // 如果值是字符串类型
         resolve(words.toLowerCase());
       } else if (Array.isArray(words)) {
@@ -75,7 +75,7 @@ function convertToLowerKebabCase(str) {
         }
         resolve(res.slice(0, -1));
       } else {
-        reject(new Error('Invalid input'));
+        reject(new Error("Invalid input"));
       }
     } catch (error) {
       reject(error);
@@ -92,7 +92,7 @@ function convertToUpperKebabCase(str) {
 
       let res = "";
 
-      if (typeof words === 'string') {
+      if (typeof words === "string") {
         // 如果值是字符串类型
         resolve(words.toUpperCase());
       } else if (Array.isArray(words)) {
@@ -101,7 +101,7 @@ function convertToUpperKebabCase(str) {
         }
         resolve(res.slice(0, -1));
       } else {
-        reject(new Error('Invalid input'));
+        reject(new Error("Invalid input"));
       }
     } catch (error) {
       reject(error);
@@ -118,7 +118,7 @@ function convertToLowerCamelCase(str) {
 
       let res = "";
 
-      if (typeof words === 'string') {
+      if (typeof words === "string") {
         // 如果值是字符串类型
         resolve(words.toLowerCase());
       } else if (Array.isArray(words)) {
@@ -131,7 +131,7 @@ function convertToLowerCamelCase(str) {
         }
         resolve(res);
       } else {
-        reject(new Error('Invalid input'));
+        reject(new Error("Invalid input"));
       }
     } catch (error) {
       reject(error);
@@ -148,7 +148,7 @@ function convertToUpperCamelCase(str) {
 
       let res = "";
 
-      if (typeof words === 'string') {
+      if (typeof words === "string") {
         // 如果值是字符串类型
         resolve(capitalizeFirstLetter(words.toLowerCase()));
       } else if (Array.isArray(words)) {
@@ -157,7 +157,7 @@ function convertToUpperCamelCase(str) {
         }
         resolve(res);
       } else {
-        reject(new Error('Invalid input'));
+        reject(new Error("Invalid input"));
       }
     } catch (error) {
       reject(error);
@@ -166,7 +166,7 @@ function convertToUpperCamelCase(str) {
 }
 
 function escapeRegExp(string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 // 首字母大写
@@ -174,7 +174,7 @@ function capitalizeFirstLetter(str) {
   if (str.length === 0) {
     return str; // 空字符串不做处理
   }
-  
+
   const firstLetter = str.charAt(0).toUpperCase();
   const restOfTheString = str.slice(1);
 
@@ -187,5 +187,12 @@ module.exports = {
   convertToLowerKebabCase,
   convertToUpperKebabCase,
   convertToLowerCamelCase,
-  convertToUpperCamelCase
-}
+  convertToUpperCamelCase,
+  asyncFn(fn) {
+    return new Promise((resolve) => {
+      fn.then((result) => resolve([null, result])).catch((error) =>
+        resolve([error || true, null])
+      );
+    });
+  },
+};
