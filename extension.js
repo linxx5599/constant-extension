@@ -41,11 +41,11 @@ const events = {
   lowerSnakeCase: utils.convertToLowerSnakeCase,
   upperSnakeCase: utils.convertToUpperSnakeCase,
   lowerCamelCase: utils.convertToLowerCamelCase,
-  upperCamelCase: utils.convertToLowerCamelCase,
+  upperCamelCase: utils.convertToUpperCamelCase,
   lowerKebabCase: utils.convertToLowerKebabCase,
   upperKebabCase: utils.convertToUpperKebabCase,
-  lowerCase: (t) => t.toLowerCase(),
-  upperCase: (t) => t.toUpperCase(),
+  lowerCase: (t) => Promise.resolve(t.toLowerCase()),
+  upperCase: (t) => Promise.resolve(t.toUpperCase()),
 };
 /**
  * @param {vscode.ExtensionContext} context
