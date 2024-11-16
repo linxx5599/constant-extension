@@ -29,16 +29,6 @@ async function run(fn) {
     }
     const edit = new vscode.TextEdit(selection, cache.get(selectedText));
     textEdits.set(editor.document.uri, [edit]);
-    // await new Promise((resolve) => {
-    //   editor.edit((editBuilder) => {
-    //     try {
-    //       editBuilder.replace(selection, cache.get(selectedText));
-    //     } catch (error) {
-    //       showErrorMessage(error);
-    //     }
-    //     resolve();
-    //   });
-    // });
   }
   try {
     // 应用批量编辑
