@@ -1,6 +1,7 @@
 const WordsNinjaPack = require("wordsninja");
 const WordsNinja = new WordsNinjaPack();
-
+const vscode = require("vscode");
+const yaml = require("js-yaml");
 function injectWords() {
   WordsNinja.addWords("kube");
 }
@@ -194,6 +195,61 @@ function capitalizeFirstLetter(str) {
   return firstLetter + restOfTheString;
 }
 
+function findParentKeyRecursive(data, targetKey, currentPath = "") {
+  if (typeof data === "object" && data !== null) {
+    if (Array.isArray(data)) {
+      for (let i = 0; i < data.length; i++) {
+        const newPath = currentPath ? `${currentPath}[${i}]` : `[${i}]`;
+        const result = findParentKeyRecursive(data[i], targetKey, newPath);
+        if (result.parentKey) {
+          return result;
+        }
+      }
+    } else {
+      for (const [key, value] of Object.entries(data)) {
+        const newPath = currentPath ? `${currentPath}.${key}` : key;
+        if (key === targetKey) {
+          return {
+            parentKey: currentPath.split(".").pop() || null,
+            path: newPath,
+          };
+        }
+        const result = findParentKeyRecursive(value, targetKey, newPath);
+        if (result.parentKey) {
+          return result;
+        }
+      }
+    }
+  }
+  return { parentKey: null, path: null };
+}
+
+//在yaml文件下 复制内容转换为路径
+function copyYamlToPath(str) {
+  const editor = vscode.window.activeTextEditor;
+  //判断当前选择的是yaml文件
+  const document = editor.document;
+  // 获取文档的语言ID
+  const languageId = document.languageId;
+  if (languageId !== "yaml" && languageId !== "yml") {
+    vscode.window.showErrorMessage("当前文件不是yaml(yml)文件");
+    return;
+  }
+  //获取当前选中的yaml内容
+  const text = document.getText();
+  try {
+    const parsedYaml = yaml.load(text);
+    const { path } = findParentKeyRecursive(parsedYaml, str);
+    if (path) {
+      //复制到剪切板
+      vscode.env.clipboard.writeText(path);
+      vscode.window.showInformationMessage(`复制成功: ${path}`);
+    }
+  } catch (error) {
+    vscode.window.showErrorMessage(`解析 YAML 时出错: ${error}`);
+  }
+}
+
 module.exports = {
   convertToLowerSnakeCase,
   convertToUpperSnakeCase,
@@ -208,4 +264,5 @@ module.exports = {
       );
     });
   },
+  copyYamlToPath,
 };

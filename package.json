@@ -4,7 +4,7 @@
   "description": "Converts the selected content to uppercase",
   "publisher": "constant-extension-linjy",
   "icon": "constant.png",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -46,6 +46,10 @@
       {
         "command": "upperKebabCase",
         "title": "=> UPPER-KEBAB-CASE"
+      },
+      {
+        "command": "copyYamlToPath",
+        "title": "=> COPY-YAML-TO-PATH"
       }
     ],
     "menus": {
@@ -87,6 +91,10 @@
         {
           "command": "upperKebabCase",
           "group": "rename"
+        },
+        {
+          "command": "copyYamlToPath",
+          "group": "rename"
         }
       ]
     },
@@ -119,10 +127,11 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "js-yaml": "^4.1.0",
     "wordsninja": "^1.0.0"
   },
   "repository": {
-        "type": "git",
-        "url": "https://github.com/linxx5599/constant-extension.git"
-    }
+    "type": "git",
+    "url": "https://github.com/linxx5599/constant-extension.git"
+  }
 }
