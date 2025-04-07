@@ -4,7 +4,7 @@
   "description": "Converts the selected content to uppercase",
   "publisher": "constant-extension-linjy",
   "icon": "constant.png",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -128,7 +128,8 @@
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
-    "wordsninja": "^1.0.0"
+    "wordsninja": "^1.0.0",
+    "yaml": "^2.7.1"
   },
   "repository": {
     "type": "git",

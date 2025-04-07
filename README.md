@@ -41,4 +41,5 @@ v0.0.5 缓存相同文字批量替换，修复全小写、全大写功能
 
 2025-04-07
 v0.0.6 新增命名方法copyYamlToPath
+v0.0.7 修复copyYamlToPath bug
 ```
