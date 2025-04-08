@@ -4,7 +4,7 @@
   "description": "Converts the selected content to uppercase",
   "publisher": "constant-extension-linjy",
   "icon": "constant.png",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -48,8 +48,8 @@
         "title": "=> UPPER-KEBAB-CASE"
       },
       {
-        "command": "copyYamlToPath",
-        "title": "=> COPY-YAML-TO-PATH"
+        "command": "copyYamlPath",
+        "title": "copyYamlPath"
       }
     ],
     "menus": {
@@ -57,6 +57,11 @@
         {
           "group": "navigation",
           "submenu": "root"
+        },
+        {
+          "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml')",
+          "group": "navigation",
+          "command": "copyYamlPath"
         }
       ],
       "root": [
@@ -90,10 +95,6 @@
         },
         {
           "command": "upperKebabCase",
-          "group": "rename"
-        },
-        {
-          "command": "copyYamlToPath",
           "group": "rename"
         }
       ]

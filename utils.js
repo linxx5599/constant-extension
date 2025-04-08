@@ -195,147 +195,49 @@ function capitalizeFirstLetter(str) {
   return firstLetter + restOfTheString;
 }
 
-function findParentKeyRecursive(data, targetKey, currentPath = "") {
-  const paths = [];
-  if (typeof data === "object" && data !== null) {
-    if (Array.isArray(data)) {
-      for (let i = 0; i < data.length; i++) {
-        const newPath = currentPath ? `${currentPath}[${i}]` : `[${i}]`;
-        const subPaths = findParentKeyRecursive(data[i], targetKey, newPath);
-        paths.push(...subPaths);
-      }
-    } else {
-      for (const [key, value] of Object.entries(data)) {
-        const newPath = currentPath ? `${currentPath}.${key}` : key;
-        if (key === targetKey) {
-          paths.push(newPath);
-        }
-        const subPaths = findParentKeyRecursive(value, targetKey, newPath);
-        paths.push(...subPaths);
+function dfs(obj, path, searchStr) {
+  let testPath;
+  for (const key in obj) {
+    testPath = JSON.parse(JSON.stringify(path));
+    testPath.push(key);
+    if (obj[key] === searchStr) {
+      return testPath;
+    } else if (typeof obj[key] === "object") {
+      const dfsResult = dfs(obj[key], testPath, searchStr);
+      if (dfsResult !== undefined) {
+        return dfsResult;
       }
     }
   }
-  return paths;
 }
 
-// 在 yaml 文件下 复制内容转换为路径
-function copyYamlToPath(str) {
-  const editor = vscode.window.activeTextEditor;
-  // 判断当前选择的是 yaml 文件
-  if (!editor) {
-    vscode.window.showErrorMessage("没有活动的文本编辑器");
-    return;
-  }
-  const document = editor.document;
-  // 获取文档的语言 ID
-  const languageId = document.languageId;
-  if (languageId !== "yaml" && languageId !== "yml") {
-    vscode.window.showErrorMessage("当前文件不是 yaml(yml) 文件");
-    return;
-  }
-  // 获取当前选中的 yaml 内容
-  const text = document.getText();
-  try {
-    const parsedYaml = yaml.load(text);
-    const paths = findParentKeyRecursive(parsedYaml, str);
-    if (paths.length > 0) {
-      // 复制到剪切板
-      // vscode.env.clipboard.writeText(combinedPaths);
-      // vscode.window.showInformationMessage(`复制成功: ${combinedPaths}`);
-      if (paths.length === 1) {
-        vscode.env.clipboard.writeText(paths[0]);
-        vscode.window.showInformationMessage(`复制成功: ${paths[0]}`);
-        return;
-      }
-      // 打开弹窗 渲染列表
-      const panel = vscode.window.createWebviewPanel(
-        "pathList",
-        "YamlToPath",
-        vscode.ViewColumn.One,
-        {
-          enableScripts: true,
-        }
-      );
-      panel.webview.html = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>YamlToPath</title>
-        </head>
-        <style>
-          * {
-            margin: 0;
-            padding: 0;
-          }
-          ul {
-            padding: 24px 0 0 0;
-            list-style-type: none;
-          }
-          li {
-            margin-bottom: 10px;
-            font-size: 18px;
-          }
-          button {
-            color: #fff;
-            background-color:rgb(4, 95, 186);
-            border-color: rgb(4, 95, 186);
-            display: inline-block;
-            line-height: 1;
-            white-space: nowrap;
-            cursor: pointer;
-            border: 1px solid #dcdfe6;
-            -webkit-appearance: none;
-            text-align: center;
-            box-sizing: border-box;
-            outline: none;
-            margin: 0;
-            transition: .1s;
-            font-weight: 500;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            padding: 4px 10px;
-            font-size: 14px;
-            border-radius: 4px;
-          }
-          button:hover {
-            background: #66b1ff;
-            border-color: #66b1ff;
-            color: #fff;
-          }
-          button:active,
-          button:focus {
-            background: #66b1ff;
-            border-color: #66b1ff;
-            color: #fff;
-          }            
-        </style>
-        <body>
-          <ul>
-            ${paths
-              .map(
-                (path) =>
-                  `<li>
-                    <span>${path}</span>
-                    <button onclick="copyToClipboard('${path}')">COPY</button>
-                  </li>`
-              )
-              .join("")}
-          </ul>
-           <script>
-              function copyToClipboard(path) {
-                navigator.clipboard.writeText(path)
-              }
-            </script>
-        </body>
-      </html>
-    `;
-    } else {
-      vscode.window.showInformationMessage(`未找到键 ${str} 的路径`);
-    }
-  } catch (error) {
-    vscode.window.showErrorMessage(`解析 YAML 时出错: ${error}`);
+function copyYamlPath() {
+  const textEditor = vscode.window.activeTextEditor;
+  if (textEditor !== undefined) {
+    const selectedLine = textEditor.selection.active.line;
+    const selection = new vscode.Selection(
+      0,
+      0,
+      selectedLine,
+      textEditor.document.lineAt(selectedLine).range.end.character
+    );
+    const yamlString = textEditor.document.getText(selection);
+    const yamlLines = yamlString.split(/\r?\n/);
+    const lastLine = yamlLines[yamlLines.length - 1];
+    const propertyData = lastLine.split(":", 1);
+    propertyData[1] =
+      "'jdkfsdajksadfu90ixosfuijkvxnyv9f7rgzvxcuhjkcausifckjdgfdjsgd'";
+    yamlLines[yamlLines.length - 1] = propertyData.join(": ");
+    const yamlData = yaml.load(yamlLines.join("\n"));
+
+    const objPath = dfs(
+      yamlData,
+      [],
+      "jdkfsdajksadfu90ixosfuijkvxnyv9f7rgzvxcuhjkcausifckjdgfdjsgd"
+    );
+    const path = objPath.join(".");
+    vscode.window.showInformationMessage(`复制成功: ${path}`);
+    vscode.env.clipboard.writeText(path);
   }
 }
 
@@ -353,5 +255,5 @@ module.exports = {
       );
     });
   },
-  copyYamlToPath,
+  copyYamlPath,
 };
