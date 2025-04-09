@@ -2,6 +2,7 @@ const WordsNinjaPack = require("wordsninja");
 const WordsNinja = new WordsNinjaPack();
 const vscode = require("vscode");
 const yaml = require("js-yaml");
+
 function injectWords() {
   WordsNinja.addWords("kube");
 }
@@ -136,7 +137,7 @@ function convertToLowerCamelCase(str) {
           resolve(words.toLowerCase());
         } else if (Array.isArray(words)) {
           for (let i = 0; i < words.length; i++) {
-            if (i == 0) {
+            if (i === 0) {
               res += words[i].toLowerCase();
             } else {
               res += capitalizeFirstLetter(words[i].toLowerCase());
@@ -197,15 +198,30 @@ function capitalizeFirstLetter(str) {
 const SEARCH_STR = "sdsdfdfghgjhksddszdxzxcdfdfdfdfdfdsafderetrhfghfsdf";
 function dfs(obj, path, searchStr) {
   let testPath;
-  for (const key in obj) {
-    testPath = JSON.parse(JSON.stringify(path));
-    testPath.push(key);
-    if (obj[key] === searchStr) {
-      return testPath;
-    } else if (typeof obj[key] === "object") {
-      const dfsResult = dfs(obj[key], testPath, searchStr);
-      if (dfsResult !== undefined) {
-        return dfsResult;
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      testPath = JSON.parse(JSON.stringify(path));
+      testPath.push(`[${i}]`);
+      if (obj[i] === searchStr) {
+        return testPath;
+      } else if (typeof obj[i] === "object" && obj[i] !== null) {
+        const dfsResult = dfs(obj[i], testPath, searchStr);
+        if (dfsResult !== undefined) {
+          return dfsResult;
+        }
+      }
+    }
+  } else {
+    for (const key in obj) {
+      testPath = JSON.parse(JSON.stringify(path));
+      testPath.push(key);
+      if (obj[key] === searchStr) {
+        return testPath;
+      } else if (typeof obj[key] === "object" && obj[key] !== null) {
+        const dfsResult = dfs(obj[key], testPath, searchStr);
+        if (dfsResult !== undefined) {
+          return dfsResult;
+        }
       }
     }
   }
@@ -252,17 +268,23 @@ function copyYamlJson() {
     yamlLines[yamlLines.length - 1] = propertyData.join(": ");
     const yamlData = yaml.load(yamlLines.join("\n"));
     const objPath = dfs(yamlData, [], `${SEARCH_STR}`);
-    let o = {};
-    if (objPath) {
-      for (const key of objPath.reverse()) {
-        o = {
-          [key]: o,
-        };
+    const result = {};
+    let current = result;
+    objPath.forEach((curr, i) => {
+      const value = objPath[i + 1];
+      const isArray = /^\[\d+\]$/.test(value);
+      const k = isArray ? curr.replace(/^\[/, "").replace(/\]$/, "") : curr;
+      const v = isArray ? [] : {};
+      if (Array.isArray(current)) {
+        current.push(v);
+      } else {
+        current[k] = v;
       }
-    }
-    const v = yaml.dump(o);
-    vscode.window.showInformationMessage(`复制成功: ${v}`);
-    vscode.env.clipboard.writeText(v);
+      current = v;
+    });
+    const jsonStr = JSON.stringify(result, null, 2);
+    vscode.window.showInformationMessage(`复制成功: ${jsonStr}`);
+    vscode.env.clipboard.writeText(jsonStr);
   }
 }
 

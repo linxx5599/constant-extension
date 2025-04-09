@@ -48,4 +48,5 @@ v0.0.8 修改 copyYamlPath 菜单单独显示 修复 copyYamlPath 功能bug 去�
 
 2025-04-09
 v0.0.9 新增 copyYamlJson 功能
+v0.1.0 修复 copyYamlJson copy出来结构为json格式
 ```
