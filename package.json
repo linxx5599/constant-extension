@@ -4,7 +4,7 @@
   "description": "Converts the selected content to uppercase",
   "publisher": "constant-extension-linjy",
   "icon": "constant.png",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -49,7 +49,11 @@
       },
       {
         "command": "copyYamlPath",
-        "title": "copyYamlPath"
+        "title": "Copy Yaml Path"
+      },
+      {
+        "command": "copyYamlJson",
+        "title": "Copy Yaml Json"
       }
     ],
     "menus": {
@@ -62,6 +66,11 @@
           "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml')",
           "group": "navigation",
           "command": "copyYamlPath"
+        },
+        {
+          "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml')",
+          "group": "navigation",
+          "command": "copyYamlJson"
         }
       ],
       "root": [

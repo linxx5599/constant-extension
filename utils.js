@@ -194,7 +194,7 @@ function capitalizeFirstLetter(str) {
 
   return firstLetter + restOfTheString;
 }
-
+const SEARCH_STR = "sdsdfdfghgjhksddszdxzxcdfdfdfdfdfdsafderetrhfghfsdf";
 function dfs(obj, path, searchStr) {
   let testPath;
   for (const key in obj) {
@@ -210,7 +210,6 @@ function dfs(obj, path, searchStr) {
     }
   }
 }
-
 function copyYamlPath() {
   const textEditor = vscode.window.activeTextEditor;
   if (textEditor !== undefined) {
@@ -225,19 +224,45 @@ function copyYamlPath() {
     const yamlLines = yamlString.split(/\r?\n/);
     const lastLine = yamlLines[yamlLines.length - 1];
     const propertyData = lastLine.split(":", 1);
-    propertyData[1] =
-      "'jdkfsdajksadfu90ixosfuijkvxnyv9f7rgzvxcuhjkcausifckjdgfdjsgd'";
+    propertyData[1] = `${SEARCH_STR}`;
     yamlLines[yamlLines.length - 1] = propertyData.join(": ");
     const yamlData = yaml.load(yamlLines.join("\n"));
-
-    const objPath = dfs(
-      yamlData,
-      [],
-      "jdkfsdajksadfu90ixosfuijkvxnyv9f7rgzvxcuhjkcausifckjdgfdjsgd"
-    );
+    const objPath = dfs(yamlData, [], `${SEARCH_STR}`);
     const path = objPath.join(".");
     vscode.window.showInformationMessage(`复制成功: ${path}`);
     vscode.env.clipboard.writeText(path);
+  }
+}
+
+function copyYamlJson() {
+  const textEditor = vscode.window.activeTextEditor;
+  if (textEditor !== undefined) {
+    const selectedLine = textEditor.selection.active.line;
+    const selection = new vscode.Selection(
+      0,
+      0,
+      selectedLine,
+      textEditor.document.lineAt(selectedLine).range.end.character
+    );
+    const yamlString = textEditor.document.getText(selection);
+    const yamlLines = yamlString.split(/\r?\n/);
+    const lastLine = yamlLines[yamlLines.length - 1];
+    const propertyData = lastLine.split(":", 1);
+    propertyData[1] = `${SEARCH_STR}`;
+    yamlLines[yamlLines.length - 1] = propertyData.join(": ");
+    const yamlData = yaml.load(yamlLines.join("\n"));
+    const objPath = dfs(yamlData, [], `${SEARCH_STR}`);
+    let o = {};
+    if (objPath) {
+      for (const key of objPath.reverse()) {
+        o = {
+          [key]: o,
+        };
+      }
+    }
+    const v = yaml.dump(o);
+    vscode.window.showInformationMessage(`复制成功: ${v}`);
+    vscode.env.clipboard.writeText(v);
   }
 }
 
@@ -256,4 +281,5 @@ module.exports = {
     });
   },
   copyYamlPath,
+  copyYamlJson,
 };
