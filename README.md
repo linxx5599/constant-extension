@@ -38,4 +38,15 @@ v0.0.3 修复批量替换
 2024-11-17
 v0.0.4 修复批量替换后回退需要单个回退
 v0.0.5 缓存相同文字批量替换，修复全小写、全大写功能
+
+2025-04-07
+v0.0.6 新增命名方法copyYamlToPath
+v0.0.7 修复 copyYamlToPath bug
+
+2025-04-08
+v0.0.8 修改 copyYamlPath 菜单单独显示 修复 copyYamlPath 功能bug 去除多选单独打开弹窗选择
+
+2025-04-09
+v0.0.9 新增 copyYamlJson 功能
+v0.1.0 修复 copyYamlJson copy出来结构为json格式
 ```

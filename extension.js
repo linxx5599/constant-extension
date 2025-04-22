@@ -47,6 +47,8 @@ const events = {
   upperKebabCase: utils.convertToUpperKebabCase,
   lowerCase: (t) => Promise.resolve(t.toLowerCase()),
   upperCase: (t) => Promise.resolve(t.toUpperCase()),
+  copyYamlPath: utils.copyYamlPath,
+  copyYamlJson: utils.copyYamlJson,
 };
 /**
  * @param {vscode.ExtensionContext} context

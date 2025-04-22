@@ -4,7 +4,7 @@
   "description": "Converts the selected content to uppercase",
   "publisher": "constant-extension-linjy",
   "icon": "constant.png",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -46,6 +46,14 @@
       {
         "command": "upperKebabCase",
         "title": "=> UPPER-KEBAB-CASE"
+      },
+      {
+        "command": "copyYamlPath",
+        "title": "Copy Yaml Path"
+      },
+      {
+        "command": "copyYamlJson",
+        "title": "Copy Yaml Json"
       }
     ],
     "menus": {
@@ -53,6 +61,16 @@
         {
           "group": "navigation",
           "submenu": "root"
+        },
+        {
+          "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml')",
+          "group": "navigation",
+          "command": "copyYamlPath"
+        },
+        {
+          "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml')",
+          "group": "navigation",
+          "command": "copyYamlJson"
         }
       ],
       "root": [
@@ -119,10 +137,12 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "wordsninja": "^1.0.0"
+    "js-yaml": "^4.1.0",
+    "wordsninja": "^1.0.0",
+    "yaml": "^2.7.1"
   },
   "repository": {
-        "type": "git",
-        "url": "https://github.com/linxx5599/constant-extension.git"
-    }
+    "type": "git",
+    "url": "https://github.com/linxx5599/constant-extension.git"
+  }
 }

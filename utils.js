@@ -1,5 +1,7 @@
 const WordsNinjaPack = require("wordsninja");
 const WordsNinja = new WordsNinjaPack();
+const vscode = require("vscode");
+const yaml = require("js-yaml");
 
 function injectWords() {
   WordsNinja.addWords("kube");
@@ -135,7 +137,7 @@ function convertToLowerCamelCase(str) {
           resolve(words.toLowerCase());
         } else if (Array.isArray(words)) {
           for (let i = 0; i < words.length; i++) {
-            if (i == 0) {
+            if (i === 0) {
               res += words[i].toLowerCase();
             } else {
               res += capitalizeFirstLetter(words[i].toLowerCase());
@@ -193,6 +195,98 @@ function capitalizeFirstLetter(str) {
 
   return firstLetter + restOfTheString;
 }
+const SEARCH_STR = "sdsdfdfghgjhksddszdxzxcdfdfdfdfdfdsafderetrhfghfsdf";
+function dfs(obj, path, searchStr) {
+  let testPath;
+  if (Array.isArray(obj)) {
+    for (let i = 0; i < obj.length; i++) {
+      testPath = JSON.parse(JSON.stringify(path));
+      testPath.push(`[${i}]`);
+      if (obj[i] === searchStr) {
+        return testPath;
+      } else if (typeof obj[i] === "object" && obj[i] !== null) {
+        const dfsResult = dfs(obj[i], testPath, searchStr);
+        if (dfsResult !== undefined) {
+          return dfsResult;
+        }
+      }
+    }
+  } else {
+    for (const key in obj) {
+      testPath = JSON.parse(JSON.stringify(path));
+      testPath.push(key);
+      if (obj[key] === searchStr) {
+        return testPath;
+      } else if (typeof obj[key] === "object" && obj[key] !== null) {
+        const dfsResult = dfs(obj[key], testPath, searchStr);
+        if (dfsResult !== undefined) {
+          return dfsResult;
+        }
+      }
+    }
+  }
+}
+function copyYamlPath() {
+  const textEditor = vscode.window.activeTextEditor;
+  if (textEditor !== undefined) {
+    const selectedLine = textEditor.selection.active.line;
+    const selection = new vscode.Selection(
+      0,
+      0,
+      selectedLine,
+      textEditor.document.lineAt(selectedLine).range.end.character
+    );
+    const yamlString = textEditor.document.getText(selection);
+    const yamlLines = yamlString.split(/\r?\n/);
+    const lastLine = yamlLines[yamlLines.length - 1];
+    const propertyData = lastLine.split(":", 1);
+    propertyData[1] = `${SEARCH_STR}`;
+    yamlLines[yamlLines.length - 1] = propertyData.join(": ");
+    const yamlData = yaml.load(yamlLines.join("\n"));
+    const objPath = dfs(yamlData, [], `${SEARCH_STR}`);
+    const path = objPath.join(".");
+    vscode.window.showInformationMessage(`复制成功: ${path}`);
+    vscode.env.clipboard.writeText(path);
+  }
+}
+
+function copyYamlJson() {
+  const textEditor = vscode.window.activeTextEditor;
+  if (textEditor !== undefined) {
+    const selectedLine = textEditor.selection.active.line;
+    const selection = new vscode.Selection(
+      0,
+      0,
+      selectedLine,
+      textEditor.document.lineAt(selectedLine).range.end.character
+    );
+    const yamlString = textEditor.document.getText(selection);
+    const yamlLines = yamlString.split(/\r?\n/);
+    const lastLine = yamlLines[yamlLines.length - 1];
+    const propertyData = lastLine.split(":", 1);
+    propertyData[1] = `${SEARCH_STR}`;
+    yamlLines[yamlLines.length - 1] = propertyData.join(": ");
+    const yamlData = yaml.load(yamlLines.join("\n"));
+    const objPath = dfs(yamlData, [], `${SEARCH_STR}`);
+    const result = {};
+    let current = result;
+    objPath.forEach((curr, i) => {
+      const value = objPath[i + 1];
+      const isArray = /^\[\d+\]$/.test(value);
+      const k = isArray ? curr.replace(/^\[/, "").replace(/\]$/, "") : curr;
+      const v = isArray ? [] : {};
+      if (Array.isArray(current)) {
+        current.push(v);
+      } else {
+        current[k] = v;
+      }
+      current = v;
+    });
+    const jsonStr = JSON.stringify(result, null, 2);
+    vscode.window.showInformationMessage(`复制成功: ${jsonStr}`);
+    vscode.env.clipboard.writeText(jsonStr);
+  }
+}
 
 module.exports = {
   convertToLowerSnakeCase,
@@ -208,4 +302,6 @@ module.exports = {
       );
     });
   },
+  copyYamlPath,
+  copyYamlJson,
 };
