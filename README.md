@@ -49,8 +49,10 @@ v0.0.8 修改 copyYamlPath 菜单单独显示 修复 copyYamlPath 功能bug 去�
 2025-04-09
 v0.0.9 新增 copyYamlJson 功能
 v0.1.0 修复 copyYamlJson copy出来结构为json格式
-v0.1.1 新增 copyYamlPath 大/小写蛇形路径，支持 JSON 菜单
+
+2025-05-06
+v0.1.2 新增 copyYamlPath 大/小写蛇形路径，支持 JSON 菜单
 v0.1.2 调整为统一 CopyPath 入口
-v0.1.3 CopyPath 新增 jsonPath、大小写、kebab、camel、snake 格式
-v0.1.4 CopyPath 新增 WithValue 复制格式
+v0.1.2 CopyPath 新增 jsonPath、大小写、kebab、camel、snake 格式
+v0.1.2 CopyPath 新增 WithValue 复制格式
 ```
