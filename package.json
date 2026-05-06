@@ -4,14 +4,41 @@
   "description": "Converts the selected content to uppercase",
   "publisher": "constant-extension-linjy",
   "icon": "constant.png",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:upperCamelCase",
+    "onCommand:lowerCamelCase",
+    "onCommand:lowerCase",
+    "onCommand:upperCase",
+    "onCommand:lowerSnakeCase",
+    "onCommand:upperSnakeCase",
+    "onCommand:lowerKebabCase",
+    "onCommand:upperKebabCase",
+    "onCommand:copyPathJsonPath",
+    "onCommand:copyPathLowerCase",
+    "onCommand:copyPathUpperCase",
+    "onCommand:copyPathLowerKebabCase",
+    "onCommand:copyPathUpperKebabCase",
+    "onCommand:copyPathLowerCamelCase",
+    "onCommand:copyPathUpperCamelCase",
+    "onCommand:copyPathLowerSnakeCase",
+    "onCommand:copyPathUpperSnakeCase",
+    "onCommand:copyPathJsonPathWithValue",
+    "onCommand:copyPathLowerCaseWithValue",
+    "onCommand:copyPathUpperCaseWithValue",
+    "onCommand:copyPathLowerKebabCaseWithValue",
+    "onCommand:copyPathUpperKebabCaseWithValue",
+    "onCommand:copyPathLowerCamelCaseWithValue",
+    "onCommand:copyPathUpperCamelCaseWithValue",
+    "onCommand:copyPathLowerSnakeCaseWithValue",
+    "onCommand:copyPathUpperSnakeCaseWithValue"
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
@@ -48,29 +75,130 @@
         "title": "=> UPPER-KEBAB-CASE"
       },
       {
-        "command": "copyYamlPath",
-        "title": "Copy Yaml Path"
+        "command": "copyPathJsonPath",
+        "title": "=> jsonPath"
       },
       {
-        "command": "copyYamlJson",
-        "title": "Copy Yaml Json"
+        "command": "copyPathLowerCase",
+        "title": "=> case"
+      },
+      {
+        "command": "copyPathUpperCase",
+        "title": "=> CASE"
+      },
+      {
+        "command": "copyPathLowerKebabCase",
+        "title": "=> kebab-case"
+      },
+      {
+        "command": "copyPathUpperKebabCase",
+        "title": "=> KEBAB-CASE"
+      },
+      {
+        "command": "copyPathLowerCamelCase",
+        "title": "=> lowerCamelCase"
+      },
+      {
+        "command": "copyPathUpperCamelCase",
+        "title": "=> UpperCamelCase"
+      },
+      {
+        "command": "copyPathLowerSnakeCase",
+        "title": "=> lower_snake_case"
+      },
+      {
+        "command": "copyPathUpperSnakeCase",
+        "title": "=> UPPER_SNAKE_CASE"
+      },
+      {
+        "command": "copyPathJsonPathWithValue",
+        "title": "=> jsonPath"
+      },
+      {
+        "command": "copyPathLowerCaseWithValue",
+        "title": "=> case"
+      },
+      {
+        "command": "copyPathUpperCaseWithValue",
+        "title": "=> CASE"
+      },
+      {
+        "command": "copyPathLowerKebabCaseWithValue",
+        "title": "=> kebab-case"
+      },
+      {
+        "command": "copyPathUpperKebabCaseWithValue",
+        "title": "=> KEBAB-CASE"
+      },
+      {
+        "command": "copyPathLowerCamelCaseWithValue",
+        "title": "=> lowerCamelCase"
+      },
+      {
+        "command": "copyPathUpperCamelCaseWithValue",
+        "title": "=> UpperCamelCase"
+      },
+      {
+        "command": "copyPathLowerSnakeCaseWithValue",
+        "title": "=> lower_snake_case"
+      },
+      {
+        "command": "copyPathUpperSnakeCaseWithValue",
+        "title": "=> UPPER_SNAKE_CASE"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "group": "navigation",
+          "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml' || resourceLangId == 'json')",
+          "group": "navigation@1",
+          "submenu": "copyPathMenu"
+        },
+        {
+          "group": "navigation@2",
           "submenu": "root"
+        }
+      ],
+      "copyPathMenu": [
+        {
+          "group": "copyPath@1",
+          "command": "copyPathJsonPath"
         },
         {
-          "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml')",
-          "group": "navigation",
-          "command": "copyYamlPath"
+          "group": "copyPath@2",
+          "command": "copyPathLowerCase"
         },
         {
-          "when": "editorHasSelection && (resourceLangId == 'yaml' || resourceLangId == 'yml')",
-          "group": "navigation",
-          "command": "copyYamlJson"
+          "group": "copyPath@3",
+          "command": "copyPathUpperCase"
+        },
+        {
+          "group": "copyPath@4",
+          "command": "copyPathLowerKebabCase"
+        },
+        {
+          "group": "copyPath@5",
+          "command": "copyPathUpperKebabCase"
+        },
+        {
+          "group": "copyPath@6",
+          "command": "copyPathLowerCamelCase"
+        },
+        {
+          "group": "copyPath@7",
+          "command": "copyPathUpperCamelCase"
+        },
+        {
+          "group": "copyPath@8",
+          "command": "copyPathLowerSnakeCase"
+        },
+        {
+          "group": "copyPath@9",
+          "command": "copyPathUpperSnakeCase"
+        },
+        {
+          "group": "copyPath@10",
+          "submenu": "copyPathWithValueMenu"
         }
       ],
       "root": [
@@ -106,12 +234,58 @@
           "command": "upperKebabCase",
           "group": "rename"
         }
+      ],
+      "copyPathWithValueMenu": [
+        {
+          "group": "copyPathWithValue@1",
+          "command": "copyPathJsonPathWithValue"
+        },
+        {
+          "group": "copyPathWithValue@2",
+          "command": "copyPathLowerCaseWithValue"
+        },
+        {
+          "group": "copyPathWithValue@3",
+          "command": "copyPathUpperCaseWithValue"
+        },
+        {
+          "group": "copyPathWithValue@4",
+          "command": "copyPathLowerKebabCaseWithValue"
+        },
+        {
+          "group": "copyPathWithValue@5",
+          "command": "copyPathUpperKebabCaseWithValue"
+        },
+        {
+          "group": "copyPathWithValue@6",
+          "command": "copyPathLowerCamelCaseWithValue"
+        },
+        {
+          "group": "copyPathWithValue@7",
+          "command": "copyPathUpperCamelCaseWithValue"
+        },
+        {
+          "group": "copyPathWithValue@8",
+          "command": "copyPathLowerSnakeCaseWithValue"
+        },
+        {
+          "group": "copyPathWithValue@9",
+          "command": "copyPathUpperSnakeCaseWithValue"
+        }
       ]
     },
     "submenus": [
       {
         "id": "root",
         "label": "Rename"
+      },
+      {
+        "id": "copyPathMenu",
+        "label": "CopyPath"
+      },
+      {
+        "id": "copyPathWithValueMenu",
+        "label": "WithValue"
       }
     ],
     "keybindings": [
